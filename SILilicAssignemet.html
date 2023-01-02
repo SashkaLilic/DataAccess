@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>QuizApp</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <form id="quiz">
+        </form>
+     <script>
+       let json = {
+  "quiz": {
+    "q1": {
+      "question": "Which one is correct team name in NBA?",
+      "options": [
+        "New York Bulls",
+        "Los Angeles Kings",
+        "Golden State Warriros",
+        "Huston Rocket"
+      ],
+      "answer": "Huston Rocket"
+    },
+    "q2": {
+      "question": "'Namaste' is a traditional greeting in which Asian language?",
+      "options": [
+        "Hindi",
+        "Mandarin",
+        "Nepalese",
+        "Thai"
+      ],
+      "answer": "Hindi"
+    },
+    "q3": {
+      "question": "The Spree river flows through which major European capital city?",
+      "options": [
+        "Berlin",
+        "Paris",
+        "Rome",
+        "London"
+      ],
+      "answer": "Berlin"
+    },
+    "q4": {
+      "question": "Which famous artist had both a 'Rose Period' and a 'Blue Period'?",
+      "options": [
+        "Pablo Picasso",
+        "Vincent van Gogh",
+        "Salvador Dalí",
+        "Edgar Degas"
+      ],
+      "answer": "Pablo Picasso"
+    }
+  }
+}
+
+let quiz = document.getElementById("quiz");
+let array = Object.keys(json.quiz);
+for (let j = 0; j < array.length; j++) {
+  let key = array [j];
+  let questionItem = json.quiz[key];
+  let html = "<div>";
+  html += "<div><h2>Question " + (j + 1) + ": " + questionItem.question + "</h2></div>";
+  html += "<div id=option>";
+  for (let i = 0; i < questionItem.options.length; i++) {
+    html += "<div>";
+    html += "<input type=\"radio\" name=\"answer\ " + key + "_option\"  value=\"" + questionItem.options[i] + "\">" + questionItem.options[i];
+    html += "</div>";
+  }
+  html += "</div>";
+  html += "</div>";
+
+
+  quiz.innerHTML += html;
+}  
+
+let button ="<button id=\"button\">";
+button +=  "<input type=\"button\" value=\"submit\">";
+quiz.innerHTML += button;
+  
+var inputAnswer = document.getElementById("option");
+inputAnswer.addEventListener("check", function() {
+var answer = document.querySelectorAll('[type="radio"]:checked').value;
+});
+
+
+var buttonEl = document.getElementById("button");
+buttonEl.addEventListener("click", addAnswerToLocalStorage);
+
+
+function addAnswerToLocalStorage() {
+    event.preventDefault();
+    let checked = Array.from(document.querySelectorAll("input[type=radio]:checked")).map (e => e.value);
+    localStorage.setItem('checked', JSON.stringify(checked));
+
+  }
+    </script>    
+    </body>
+    </html>
